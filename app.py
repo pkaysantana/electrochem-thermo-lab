@@ -20,6 +20,13 @@ def pathway_a_potentiometry(T_pot_K, E_pot_V, cell_name="Daniell"):
     if r_squared < 0.95:
         print(f"\n[ADVISORY WATCHDOG] POLARIZATION WARNING for {cell_name} (R²={r_squared:.4f}):")
         print("Voltage drop detected. Ensure you are taking readings instantly.")
+
+    # Thermodynamic Sanity Check
+    if slope > 0:
+        print(f"\n[CRITICAL THERMODYNAMIC WARNING]: Positive slope detected (\u0394S > 0).")
+        print("This violates the expected physical chemistry for this cell.")
+        print("Verify that your T and E arrays are not inverted and that")
+        print("polarization didn't skew your higher-temperature readings.")
         
     # Energy calculations
     T_mean = np.mean(T_pot_K)
@@ -96,9 +103,10 @@ def main():
     print("                         DUAL DATA FLOW EXECUTION                      ")
     print("=======================================================================")
     
-    # --- Mock Daniell Cell Data ---
-    T_mock_K = np.array([273.15, 283.15, 293.15, 303.15, 313.15])
-    E_mock_V = np.array([1.085, 1.090, 1.096, 1.101, 1.105]) 
+    # --- Mock Daniell Cell Data (chemically accurate: E decreases as T rises, ΔS < 0) ---
+    # T in °C: [15, 20, 25, 30, 35, 40] → converted to Kelvin
+    T_mock_K = np.array([288.15, 293.15, 298.15, 303.15, 308.15, 313.15])
+    E_mock_V = np.array([1.104, 1.102, 1.100, 1.098, 1.095, 1.093])
     
     # 1. Pathway A (Good Data)
     print("\n--- PATHWAY A (POTENTIOMETRY) ---")

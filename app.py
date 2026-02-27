@@ -118,7 +118,7 @@ def main():
     
     # 2. Watchdog Test (Bad Data)
     print("\n--- PATHWAY A (POTENTIOMETRY) - BAD DATA TEST ---")
-    E_bad_V = np.array([1.100, 1.050, 1.090, 1.010, 1.105]) # Will trigger R² < 0.95
+    E_bad_V = np.array([1.100, 1.050, 1.090, 1.010, 1.105, 1.060]) # Will trigger R² < 0.95
     pathway_a_potentiometry(T_mock_K, E_bad_V, "Daniell_Bad")
     
     # 3. Pathway B (Calorimetry)
